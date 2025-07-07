@@ -21,8 +21,17 @@ pipeline {
             }
         }
         stage('Test') {
+            agent {
+                docker {
+                    image 'node:18-alpine' // Use Node.js 18 Alpine image
+                    reuseNode true // Reuse the node for efficiency
+                }
+            }
             steps {
-                sh 'test -f build/index.html'
+                sh '''
+                    test -f build/index.html'
+                    npm test
+                '''
             }
         }
     }
